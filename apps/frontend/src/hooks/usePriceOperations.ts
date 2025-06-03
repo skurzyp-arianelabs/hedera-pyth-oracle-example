@@ -9,20 +9,18 @@ import {
 import { abi } from '@/assets/abi.json';
 import type { PriceUpdate } from '@pythnetwork/hermes-client';
 import type { ContractBalance } from '@/types';
-import type { useWallet } from '@/hooks/useWallet.ts';
+import { useWallet } from '@/hooks/useWallet.ts';
 
-export const usePriceOperations = (
-  walletHook: ReturnType<typeof useWallet>
-) => {
+export const usePriceOperations = () => {
   const [priceFeed, setPriceFeed] = useState<PriceUpdate | null>(null);
   const [onChainPrice, setOnChainPrice] = useState<ContractBalance | null>(
     null
   );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [posting, setPosting] = useState<boolean>(false);
-  const [fetching, setFetching] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [posting, setPosting] = useState(false);
+  const [fetching, setFetching] = useState(false);
 
-  const { address, walletProvider, createWalletClientInstance } = walletHook;
+  const { address, walletProvider, createWalletClientInstance } = useWallet();
 
   const handleFetchOraclePrice = async (tokenPair: string) => {
     if (!tokenPair) return;

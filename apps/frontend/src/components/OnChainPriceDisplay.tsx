@@ -9,6 +9,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import type { ContractBalance } from '@/types';
+import { formatPrice } from '@/lib/priceFeedUtils.ts';
 
 interface OnChainPriceDisplayProps {
   onChainPrice: ContractBalance | null;
@@ -17,19 +18,14 @@ interface OnChainPriceDisplayProps {
   disabled: boolean;
 }
 
-const formatPrice = (price: number, expo: number): string => {
-  const adjustedPrice = price * Math.pow(10, expo);
-  return adjustedPrice.toFixed(Math.abs(expo));
-};
-
-export const OnChainPriceDisplay: React.FC<OnChainPriceDisplayProps> = ({
+export const OnChainPriceDisplay = ({
   onChainPrice,
   onFetchOnChainPrice,
   fetching,
   disabled,
-}) => {
+}: OnChainPriceDisplayProps) => {
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 w-full">
       <CardHeader>
         <CardTitle>On-Chain Price</CardTitle>
         <CardDescription>
@@ -38,24 +34,26 @@ export const OnChainPriceDisplay: React.FC<OnChainPriceDisplayProps> = ({
       </CardHeader>
       <CardContent>
         {onChainPrice ? (
-          <div className="flex flex-col gap-2">
-            <div>
-              <Label>Last Price (int64):</Label>{' '}
-              {onChainPrice.lastPrice.toString()}
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-between">
+              <Label>Last Price (int64):</Label>
+              <span>{onChainPrice.lastPrice.toString()}</span>
             </div>
-            <div>
-              <Label>Last Expo (int32):</Label>{' '}
-              {onChainPrice.lastExpo.toString()}
+            <div className="flex justify-between">
+              <Label>Last Expo (int32):</Label>
+              <span>{onChainPrice.lastExpo.toString()}</span>
             </div>
-            <div>
-              <Label>Last Updated (timestamp):</Label>{' '}
-              {new Date(onChainPrice.lastUpdated * 1000).toLocaleString()}
+            <div className="flex justify-between">
+              <Label>Last Updated (timestamp):</Label>
+              <span>
+                {new Date(onChainPrice.lastUpdated * 1000).toLocaleString()}
+              </span>
             </div>
-            <div className="mt-2">
-              Equivalent USD:{' '}
-              <strong>
+            <div className="flex justify-between font-semibold mt-2">
+              <span>Equivalent USD:</span>
+              <span>
                 ${formatPrice(onChainPrice.lastPrice, onChainPrice.lastExpo)}
-              </strong>
+              </span>
             </div>
           </div>
         ) : (

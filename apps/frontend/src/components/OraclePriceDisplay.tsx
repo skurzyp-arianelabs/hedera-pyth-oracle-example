@@ -8,6 +8,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import type { PriceUpdate } from '@pythnetwork/hermes-client';
+import { formatPrice } from '@/lib/priceFeedUtils.ts';
 
 interface PriceDisplayProps {
   priceFeed: PriceUpdate;
@@ -16,19 +17,14 @@ interface PriceDisplayProps {
   disabled: boolean;
 }
 
-const formatPrice = (price: number, expo: number): string => {
-  const adjustedPrice = price * Math.pow(10, expo);
-  return adjustedPrice.toFixed(Math.abs(expo));
-};
-
-export const OraclePriceDisplay: React.FC<PriceDisplayProps> = ({
+export const OraclePriceDisplay = ({
   priceFeed,
   onPostPrice,
   posting,
   disabled,
-}) => {
+}: PriceDisplayProps) => {
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 w-full">
       <CardHeader>
         <CardTitle>HBAR/USDC Price</CardTitle>
       </CardHeader>

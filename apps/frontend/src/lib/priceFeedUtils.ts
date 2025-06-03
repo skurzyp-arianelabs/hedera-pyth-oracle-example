@@ -88,3 +88,8 @@ export const getPriceFromContract = async (
     lastUpdated: Number(lu),
   };
 };
+
+export const formatPrice = (price: number, expo: number): string => {
+  const adjustedPrice = price * Math.pow(10, expo);
+  return adjustedPrice.toFixed(Math.abs(expo));
+};

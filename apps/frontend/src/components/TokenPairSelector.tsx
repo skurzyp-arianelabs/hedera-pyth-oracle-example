@@ -24,34 +24,33 @@ interface TokenPairSelectorProps {
   disabled: boolean;
 }
 
-export const TokenPairSelector: React.FC<TokenPairSelectorProps> = ({
+export const TokenPairSelector = ({
   tokenPair,
   onTokenPairChange,
   onFetchPrice,
   loading,
   disabled,
-}) => {
+}: TokenPairSelectorProps) => {
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 w-full">
       <CardHeader>
         <CardTitle>Select Token Pair</CardTitle>
         <CardDescription>
-          <b>Choose a token pair</b> to fetch price from Pyth Oracle
+          <span className="font-bold">Choose a token pair</span> to fetch price
+          from Pyth Oracle
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-6">
-          <div className="grid gap-2">
-            <Label htmlFor="token-pair">Token Pair</Label>
-            <Select onValueChange={onTokenPairChange}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Token Pair" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="HBAR/USDC">HBAR/USDC</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="grid gap-2">
+          <Label htmlFor="token-pair">Token Pair</Label>
+          <Select onValueChange={onTokenPairChange}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Token Pair" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="HBAR/USDC">HBAR/USDC</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </CardContent>
       <CardFooter>

@@ -1,4 +1,3 @@
-import './App.css';
 import MainScreen from '@/components/screens/MainScreen.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
 
