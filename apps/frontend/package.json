@@ -10,14 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pythnetwork/hermes-client": "^2.0.0",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@reown/appkit": "^1.7.7",
+    "@reown/appkit-adapter-ethers": "^1.7.7",
+    "@reown/walletkit": "^1.2.5",
     "@tailwindcss/vite": "^4.1.7",
+    "@walletconnect/core": "^2.21.0",
+    "@walletconnect/utils": "^2.21.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
     "lucide-react": "^0.511.0",
+    "next-themes": "^0.4.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "sonner": "^2.0.4",
     "tailwind-merge": "^3.3.0",
-    "tailwindcss": "^4.1.7"
+    "tailwindcss": "^4.1.7",
+    "viem": "^2.30.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

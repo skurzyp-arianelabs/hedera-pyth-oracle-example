@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+coverage/
+.next/
+*.log
+.env*
+# Solidity artifacts
+artifacts/
+cache/
+typechain-types/
