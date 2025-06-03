@@ -1,10 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.tsx';
 import { createAppKit } from '@reown/appkit';
 import { hederaTestnet } from '@reown/appkit/networks';
-import { EthersAdapter } from "@reown/appkit-adapter-ethers";
+import { EthersAdapter } from '@reown/appkit-adapter-ethers';
 
 const metadata = {
   name: 'Test',
@@ -24,5 +24,5 @@ createAppKit({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
-  </StrictMode>,
-)
+  </StrictMode>
+);

@@ -1,8 +1,13 @@
-import { getContract, createWalletClient, custom, publicActions, parseEther } from "viem";
-import { hederaTestnet } from "viem/chains";
-import { HermesClient, type PriceUpdate } from "@pythnetwork/hermes-client";
-import type { ContractBalance } from "@/types";
-
+import {
+  getContract,
+  createWalletClient,
+  custom,
+  publicActions,
+  parseEther,
+} from 'viem';
+import { hederaTestnet } from 'viem/chains';
+import { HermesClient, type PriceUpdate } from '@pythnetwork/hermes-client';
+import type { ContractBalance } from '@/types';
 
 export const postPrice = async (
   address: `0x${string}`,
@@ -15,7 +20,7 @@ export const postPrice = async (
   const walletClient = createWalletClient({
     account: address,
     chain: hederaTestnet,
-    transport: custom(walletProvider)
+    transport: custom(walletProvider),
   }).extend(publicActions);
 
   const contract = getContract({
@@ -24,32 +29,31 @@ export const postPrice = async (
     client: walletClient,
   });
 
-  console.debug("priceFeedUpdateData.binary.data: " + JSON.stringify(priceFeedUpdateData.binary.data));
-  console.debug("priceFeedUpdateData.binary.data[0]: " + JSON.stringify(priceFeedUpdateData.binary.data[0]));
   console.debug(
-    "Is binary.data an Array?",
-    Array.isArray(priceFeedUpdateData.binary.data)
+    'priceFeedUpdateData.binary.data: ' +
+      JSON.stringify(priceFeedUpdateData.binary.data)
   );
+
   const rawHex = priceFeedUpdateData.binary.data[0];
-  const oneBytesElement = rawHex.startsWith("0x") ? rawHex : `0x${rawHex}`;
+  const oneBytesElement = rawHex.startsWith('0x') ? rawHex : `0x${rawHex}`;
   const updateDataArray = [oneBytesElement];
 
-  const hash = await contract.write.updatePrice(
-    [updateDataArray as any],
-    { value: parseEther("20") }
-  );
+  const hash = await contract.write.updatePrice([updateDataArray as any], {
+    value: parseEther('10'),
+  });
 
-  console.log("Transaction hash:", hash);
+  console.log('Transaction hash:', hash);
   return hash;
 };
 
-export const fetchPythPrice = async (priceFeedId: string): Promise<PriceUpdate> => {
-  const connection = new HermesClient(
-    "https://hermes.pyth.network"
-  )
+export const fetchPythPrice = async (
+  priceFeedId: string
+): Promise<PriceUpdate> => {
+  const connection = new HermesClient('https://hermes.pyth.network');
   const priceIds = [priceFeedId];
-  const priceFeedUpdateData: PriceUpdate = await connection.getLatestPriceUpdates(priceIds);
-  console.log("Retrieved Pyth price update:");
+  const priceFeedUpdateData: PriceUpdate =
+    await connection.getLatestPriceUpdates(priceIds);
+  console.log('Retrieved Pyth price update:');
   console.log(priceFeedUpdateData);
 
   return priceFeedUpdateData;
@@ -59,13 +63,13 @@ export const getPriceFromContract = async (
   address: `0x${string}`,
   walletProvider: any,
   contractAddress: string,
-  abi: any,
+  abi: any
 ): Promise<ContractBalance> => {
   // Create a viem wallet client from the provider
   const walletClient = createWalletClient({
     account: address,
     chain: hederaTestnet,
-    transport: custom(walletProvider)
+    transport: custom(walletProvider),
   }).extend(publicActions);
 
   const contract = getContract({
@@ -73,6 +77,7 @@ export const getPriceFromContract = async (
     abi: abi,
     client: walletClient,
   });
+
 
   // @ts-ignore
   const [lp, le, lu]: [bigint, number, bigint] = await contract.read.getLatestPrice();
@@ -82,4 +87,4 @@ export const getPriceFromContract = async (
     lastExpo: le,
     lastUpdated: Number(lu),
   };
-}
+};

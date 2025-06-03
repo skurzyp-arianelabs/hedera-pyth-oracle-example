@@ -5,6 +5,13 @@
   "scripts": {
     "dev": "pnpm --filter frontend dev",
     "build": "pnpm -r run build",
-    "test:contracts": "cd contracts && forge test"
+    "test:contracts": "cd contracts && forge test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:frontend": "prettier --write apps/frontend",
+    "format:contracts": "prettier --write contracts"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   }
 }

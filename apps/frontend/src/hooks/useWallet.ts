@@ -1,6 +1,6 @@
-import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
-import { createWalletClient, custom, publicActions } from "viem";
-import { hederaTestnet } from "viem/chains";
+import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react';
+import { createWalletClient, custom, publicActions } from 'viem';
+import { hederaTestnet } from 'viem/chains';
 
 export const useWallet = () => {
   const { address } = useAppKitAccount();
@@ -8,13 +8,13 @@ export const useWallet = () => {
 
   const createWalletClientInstance = () => {
     if (!walletProvider || !address) {
-      throw new Error("Wallet not connected");
+      throw new Error('Wallet not connected');
     }
 
     return createWalletClient({
       account: address as `0x${string}`,
       chain: hederaTestnet,
-      transport: custom(walletProvider as any)
+      transport: custom(walletProvider as any),
     }).extend(publicActions);
   };
 
@@ -22,6 +22,6 @@ export const useWallet = () => {
     address,
     walletProvider,
     createWalletClientInstance,
-    isConnected: !!(address && walletProvider)
+    isConnected: !!(address && walletProvider),
   };
 };

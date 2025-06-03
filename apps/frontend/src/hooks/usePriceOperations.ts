@@ -1,15 +1,23 @@
-import { useState } from "react";
-import { toast } from "sonner";
-import { waitForTransactionReceipt } from "viem/actions";
-import { fetchPythPrice, getPriceFromContract, postPrice } from "@/lib/priceFeedUtils.ts";
-import { abi } from "@/assets/abi.json";
-import type { PriceUpdate } from "@pythnetwork/hermes-client";
-import type { ContractBalance } from "@/types";
-import type { useWallet } from "@/hooks/useWallet.ts";
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { waitForTransactionReceipt } from 'viem/actions';
+import {
+  fetchPythPrice,
+  getPriceFromContract,
+  postPrice,
+} from '@/lib/priceFeedUtils.ts';
+import { abi } from '@/assets/abi.json';
+import type { PriceUpdate } from '@pythnetwork/hermes-client';
+import type { ContractBalance } from '@/types';
+import type { useWallet } from '@/hooks/useWallet.ts';
 
-export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => {
+export const usePriceOperations = (
+  walletHook: ReturnType<typeof useWallet>
+) => {
   const [priceFeed, setPriceFeed] = useState<PriceUpdate | null>(null);
-  const [onChainPrice, setOnChainPrice] = useState<ContractBalance | null>(null);
+  const [onChainPrice, setOnChainPrice] = useState<ContractBalance | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [posting, setPosting] = useState<boolean>(false);
   const [fetching, setFetching] = useState<boolean>(false);
@@ -20,13 +28,16 @@ export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => 
     if (!tokenPair) return;
     setLoading(true);
     try {
-      const priceFeedId = tokenPair === "HBAR/USDC" ? import.meta.env.VITE_HBAR_USD_ID : tokenPair;
+      const priceFeedId =
+        tokenPair === 'HBAR/USDC'
+          ? import.meta.env.VITE_HBAR_USD_ID
+          : tokenPair;
       const fetchedPrice: PriceUpdate = await fetchPythPrice(priceFeedId);
       setPriceFeed(fetchedPrice);
-      toast.success("Price fetched successfully!");
+      toast.success('Price fetched successfully!');
     } catch (error) {
-      console.error("Error fetching price:", error);
-      toast.error("Failed to fetch price", {
+      console.error('Error fetching price:', error);
+      toast.error('Failed to fetch price', {
         description: String(error),
       });
     } finally {
@@ -36,8 +47,8 @@ export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => 
 
   const handlePostPrice = async () => {
     if (!walletProvider || !priceFeed) {
-      toast.error("Error", {
-        description: "Wallet not connected or no price feed data",
+      toast.error('Error', {
+        description: 'Wallet not connected or no price feed data',
       });
       return;
     }
@@ -52,25 +63,27 @@ export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => 
         priceFeed
       );
 
-      toast.info("Transaction submitted", {
+      toast.info('Transaction submitted', {
         description: `Waiting for confirmation...`,
       });
 
       const walletClient = createWalletClientInstance();
-      const receipt = await waitForTransactionReceipt(walletClient, { hash: txHash });
+      const receipt = await waitForTransactionReceipt(walletClient, {
+        hash: txHash,
+      });
 
       if (receipt.status === 'success') {
-        toast.success("Price posted successfully!", {
+        toast.success('Price posted successfully!', {
           description: `Tx Hash: ${txHash}`,
         });
       } else {
-        toast.error("Transaction failed", {
+        toast.error('Transaction failed', {
           description: `Tx Hash: ${txHash}`,
         });
       }
     } catch (error) {
-      console.error("Error posting price:", error);
-      toast.error("Transaction error", {
+      console.error('Error posting price:', error);
+      toast.error('Transaction error', {
         description: String(error),
       });
     } finally {
@@ -80,8 +93,8 @@ export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => 
 
   const handleFetchOnChainPrice = async () => {
     if (!walletProvider || !address) {
-      toast.error("Error", {
-        description: "Wallet not connected",
+      toast.error('Error', {
+        description: 'Wallet not connected',
       });
       return;
     }
@@ -95,10 +108,10 @@ export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => 
         abi
       );
       setOnChainPrice(result);
-      toast.success("On-chain price fetched successfully!");
+      toast.success('On-chain price fetched successfully!');
     } catch (e) {
-      console.error("Error reading on-chain price:", e);
-      toast.error("Failed to fetch on-chain price", {
+      console.error('Error reading on-chain price:', e);
+      toast.error('Failed to fetch on-chain price', {
         description: String(e),
       });
     } finally {
@@ -114,6 +127,6 @@ export const usePriceOperations = (walletHook: ReturnType<typeof useWallet>) => 
     fetching,
     handleFetchOraclePrice,
     handlePostPrice,
-    handleFetchOnChainPrice
+    handleFetchOnChainPrice,
   };
 };

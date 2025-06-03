@@ -1,7 +1,20 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 interface TokenPairSelectorProps {
   tokenPair: string | null;
@@ -16,7 +29,7 @@ export const TokenPairSelector: React.FC<TokenPairSelectorProps> = ({
   onTokenPairChange,
   onFetchPrice,
   loading,
-  disabled
+  disabled,
 }) => {
   return (
     <Card className="mt-6">
@@ -32,7 +45,7 @@ export const TokenPairSelector: React.FC<TokenPairSelectorProps> = ({
             <Label htmlFor="token-pair">Token Pair</Label>
             <Select onValueChange={onTokenPairChange}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Token Pair"/>
+                <SelectValue placeholder="Token Pair" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="HBAR/USDC">HBAR/USDC</SelectItem>
@@ -47,7 +60,7 @@ export const TokenPairSelector: React.FC<TokenPairSelectorProps> = ({
           onClick={onFetchPrice}
           disabled={!tokenPair || loading || disabled}
         >
-          {loading ? "Fetching..." : "Fetch price"}
+          {loading ? 'Fetching...' : 'Fetch price'}
         </Button>
       </CardFooter>
     </Card>

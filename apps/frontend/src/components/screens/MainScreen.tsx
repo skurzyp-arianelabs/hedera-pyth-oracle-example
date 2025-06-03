@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useWallet } from "@/hooks/useWallet";
-import { usePriceOperations } from "@/hooks/usePriceOperations";
-import { TokenPairSelector } from "@/components/TokenPairSelector";
-import { OnChainPriceDisplay } from "@/components/OnChainPriceDisplay";
-import { OraclePriceDisplay } from "@/components/OraclePriceDisplay.tsx";
+import React, { useState } from 'react';
+import { useWallet } from '@/hooks/useWallet';
+import { usePriceOperations } from '@/hooks/usePriceOperations';
+import { TokenPairSelector } from '@/components/TokenPairSelector';
+import { OnChainPriceDisplay } from '@/components/OnChainPriceDisplay';
+import { OraclePriceDisplay } from '@/components/OraclePriceDisplay.tsx';
 
 const MainScreen: React.FC = () => {
   const [tokenPair, setTokenPair] = useState<string | null>(null);
@@ -21,7 +21,7 @@ const MainScreen: React.FC = () => {
     <div>
       <header>
         <div className="flex justify-center items-center p-4">
-          <appkit-button/>
+          <appkit-button />
         </div>
       </header>
 
